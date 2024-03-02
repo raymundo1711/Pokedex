@@ -1,0 +1,24 @@
+<div class="pokedex-container">
+  <div class="search-bar">
+    <input type="text" placeholder="Name or Number" [value]="searchText"  (input)="search($event)" >
+    <button (click)="searchPokemon()">Search</button>
+  </div>
+  <div class="pokemon-list">
+    <div  [style.background-color]="isFavorite(pokemon) ? '#ffcc00' : '' " class="pokemon-item" *ngFor="let pokemon of pokemonList" [routerLink]="['/pokemon', pokemon.name]" >
+      <div class="pokemon-image">
+        <img [src]="pokemon.image" alt="{{ pokemon.name }}">
+      </div>
+      <div class="pokemon-info">
+        <span class="pokemon-number">#{{ pokemon.id }}</span>
+        <h2 class="pokemon-name">{{ pokemon.name | titlecase}}</h2>
+        <span [style.background-color]="getTypeColor(type.type?.name)" class="pokemon-type" *ngFor="let type of pokemon.types">{{ type.type.name | titlecase }}</span>
+        <br>
+        <button *ngIf="!isFavorite(pokemon)" class="add-to-favorites" (click)="addFavorite( $event,pokemon)">Add to Favorites</button>
+        <button *ngIf="isFavorite(pokemon)" class="remove-from-favorites" (click)="removeFavorite( $event,pokemon)">Remove from Favorites</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="loader"></div>
+  </div>
+</div>
