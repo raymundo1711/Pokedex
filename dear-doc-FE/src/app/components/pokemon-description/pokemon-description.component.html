@@ -1,0 +1,45 @@
+
+
+<div class="pokemon-container" *ngIf="pokemon; else notFoundTemplate">
+  <button class="back-to-pokedex" [routerLink]="['/pokedex']">Back to Pokedex</button>
+
+  <div class="pokemon-card">
+    <div class="pokemon-image">
+      <img [src]="pokemon.image" alt="{{ pokemon.name }}">
+    </div>
+    <div class="pokemon-details">
+      <h1 class="pokemon-name">{{ pokemon.name | uppercase }} <span class="pokemon-id">#{{ pokemon.id }}</span></h1>
+      <div class="pokemon-stats">
+        <div class="stat-item">
+          <div class="stat-label">Height</div>
+          <div class="stat-value">{{ pokemon.height }} dm</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Weight</div>
+          <div class="stat-value">{{ pokemon.weight }} hg</div>
+        </div>
+      </div>
+      <div class="pokemon-types">
+        <span class="pokemon-type" [style.background-color]="getTypeColor(type.type?.name)" *ngFor="let type of pokemon.types">{{ type.type.name | uppercase }}</span>
+      </div>
+      <div class="pokemon-abilities">
+        <h2>Abilities</h2>
+        <ul>
+          <li [style.background-color]="getHabitatColor( ability.ability?.name)" *ngFor="let ability of pokemon.abilities">{{ ability.ability.name | uppercase }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #notFoundTemplate class="not-found">
+
+  <div class="pokemon-not-found" *ngIf="!isLoading">
+    <button class="back-to-pokedex" [routerLink]="['/pokedex']">Back to Pokedex</button>s
+    <img src="/assets/images/not-found.webp" alt="404 Error: Pokemon Not Found">
+    <div class="error-message">
+      <h1>404 Error</h1>
+      <p>Pokemon Not Found</p>
+    </div>
+  </div>
+</ng-template>
